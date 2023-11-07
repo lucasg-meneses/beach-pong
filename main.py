@@ -1,7 +1,8 @@
 import json
+import asyncio
 import pygame as pyg
 from entity.ball import Ball
-
+import config as cfg
 from entity.pad import Pad, PadPlayer
 from entity.block import Block
 from entity.entity import Entity
@@ -10,6 +11,7 @@ from entity.fontManager.text import Text
 
 class Game:
     def __init__(self, title="My Game", width=300, height=300, fullscreen=True):
+        self.COUNT_DOWN = 3
         pyg.init()
 
         self.__canvas = pyg.display.set_mode(
@@ -52,7 +54,7 @@ class Game:
             self.__bricks.add(Block(i, -16))
             self.__bricks.add(Block(i, 180))
 
-    def gameLoop(self):
+    async def gameLoop(self):
         self.__exit = False
 
         while not self.__exit:
@@ -64,10 +66,11 @@ class Game:
 
             pyg.display.flip()
             self.__clock.tick(60)
+            await asyncio.sleep(0)  # Very important, and keep it 0
 
     def __setQuitGame(self):
         for event in pyg.event.get():
-            if event.type == pyg.QUIT or event.type == pyg.KEYDOWN and event.key == pyg.K_ESCAPE:
+            if event.type == pyg.QUIT or event.type == pyg.KEYDOWN and (event.key == pyg.K_ESCAPE):
                 self.__exit = True
 
     def draw(self):
@@ -104,10 +107,6 @@ class Game:
 
 
 if __name__ == '__main__':
-    file = open('config.json')
-    config = json.load(file)
-    file.close()
-
     game = Game(title="Beach Pong",
-                width=config['resolution']['width'], height=config['resolution']['height'], fullscreen=config['fullscreen'])
-    game.gameLoop()
+                width=cfg.WIDTH, height=cfg.HEIGHT, fullscreen=cfg.FULLSCREEN)
+    asyncio.run(game.gameLoop())
