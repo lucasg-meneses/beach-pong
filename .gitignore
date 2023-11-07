@@ -5,4 +5,4 @@ entity/__pycache__/pad.cpython-310.pyc
 entity/fontManager/__pycache__/text.cpython-310.pyc
 entity/__pycache__/ball.cpython-310.pyc
 build/*
-__pycache__/config.cpython-310.pyc
+__pycache__/*
