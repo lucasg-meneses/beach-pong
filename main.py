@@ -109,4 +109,8 @@ class Game:
 if __name__ == '__main__':
     game = Game(title="Beach Pong",
                 width=cfg.WIDTH, height=cfg.HEIGHT, fullscreen=cfg.FULLSCREEN)
+    
+    icon = pyg.image.load("asset/sprites/ball/b_0.png")
+    pyg.display.set_icon(icon)
+
     asyncio.run(game.gameLoop())
